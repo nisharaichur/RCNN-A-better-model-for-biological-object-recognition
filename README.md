@@ -6,10 +6,6 @@ Implements the research paper: https://www.frontiersin.org/articles/10.3389/fpsy
 
 tensorflow 2.0. keras, numpy, matplotlib
 
-current progress:
-Dataset
-Recurrent Neural Network model 
-
 In progess:
 Train on the whole dataset
 Validate the hyperparameters
