@@ -34,6 +34,7 @@ class RecurrentCell(tf.Module):
             
 class RNN(tf.Module):
     def __init__(self, imageShape, hiddenUnit):
+        
         filterSize = 3
         self.pooling = [2, 14, None]
         outChannel = 32
@@ -47,22 +48,25 @@ class RNN(tf.Module):
             else:
                 self.layer.append(RecurrentCell(filterSize, inChannel, outChannel, activation))
             inChannel = outChannel
-
+        
     def __call__(self, inputImage, timeSteps):
         states = []
+        dictOutputs = {}
         states.append(tf.random.normal(shape=(1, 28, 28, 32)))
         states.append(tf.random.normal(shape=(1, 14, 14, 32)))
         states.append(tf.random.normal(shape=(1, 10)))
-        for counter, i in enumerate(range(timeSteps)):
+        for i in range(timeSteps):
             newStates = []
             x = inputImage
             for l, s, k in zip(self.layer, states, self.pooling):
-                x = l(x, s)  
+                x = l(x,s)  
                 if k == None:
                     newStates.append(x)
-                    continue
+                    dictOutputs[i] = x
+                    continue  
                 x = tf.nn.local_response_normalization(x, depth_radius=5, bias=1, alpha=0.0001, beta=0.5)
                 newStates.append(x)
-                x = tf.nn.max_pool(x, ksize=k, strides=2, padding="VALID")
-            states = newStates   
-        return states[-1][0] 
+                x = tf.nn.max_pool(x, ksize=k, strides=2, padding = "VALID")
+            states = newStates
+        return(dictOutputs)
+        
