@@ -5,7 +5,7 @@ from tensorflow.keras.layers import Flatten
 from IPython.core.display import display
 import matplotlib.pyplot as plt 
 from scipy.io import loadmat
-from recurrentbatches import RNN, RecurrentCell
+from recurrent_lateral import RNN, RecurrentCell
 
 def gradient_loss(net, data, actualOutput, loss, regularizer):
     with tf.GradientTape() as t:
