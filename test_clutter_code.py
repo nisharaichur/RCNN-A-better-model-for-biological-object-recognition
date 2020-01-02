@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from digitclutter import generate, io
 
 if __name__=='__main__':
-	n_samples = 500
+	n_samples = 10000
 	clutter_list = []
 	for i in range(n_samples):
 	    clutter_list += [generate.sample_clutter()]

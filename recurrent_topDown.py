@@ -56,8 +56,8 @@ class RNN(tf.Module):
     def __call__(self, inputImage, timeSteps):
         states = []
         dictOutputs = {}
-        states.append(tf.zeros(shape=(50, 32, 32, 32)))
-        states.append(tf.zeros(shape=(50, 16, 16, 32)))
+        states.append(tf.zeros(shape=(100, 32, 32, 32)))
+        states.append(tf.zeros(shape=(100, 16, 16, 32)))
         states.append(None)
         for i in range(timeSteps):
             newStates = []
