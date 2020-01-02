@@ -11,12 +11,16 @@ def gradient_loss(net, data, actualOutput, loss, regularizer):
     with tf.GradientTape() as t:
         t.watch(net.variables)
         predicted = net(data, 4)
-        loss_val = tf.reduce_mean([tf.reduce_mean(loss(actualOutput,x)) for x in predicted.values()])
+        loss_val = tf.reduce_mean([loss(actualOutput,x) for x in predicted.values()])
         norm = normComputation(net.variables)
         loss_regularized = loss_val + (norm * regularizer) 
     gradients = t.gradient(loss_regularized, net.variables)
     return loss_regularized, gradients
 
+def cross_entropy_loss(actual, predicted):
+    y_clipped = tf.clip_by_value(predicted, 1e-10, 0.9999999)
+    cross_entropy = -tf.reduce_mean(tf.reduce_sum(actual * tf.math.log(y_clipped) + (1 - actual) * tf.math.log(1 - y_clipped), axis=1))
+    return cross_entropy
 
 def normComputation(variables):
     norm=0.0
@@ -26,6 +30,7 @@ def normComputation(variables):
 
 def train_rnn(net, data, loss, batch, epochs, lr,train_lbs):
     data_length = data.shape[0]
+    loss_list = []
     for e in range(epochs):
         print("epoch ", e)
         avg_loss = 0.0
@@ -46,14 +51,15 @@ def train_rnn(net, data, loss, batch, epochs, lr,train_lbs):
                 net.variables[x].assign_add(v[x]) 
             learningRate = learningRate * pow(decayRate, (epochs / decayStep))
             avg_loss += lossval / indices.shape[0] 
+        loss_list.append(avg_loss)
         print("Epoch {} of {} : loss = {}.".format(e+1, epochs, avg_loss), end='/r')
-
+    return loss_list
 
 def main():
 	imgLoad = loadmat('test/test.mat)
 	net = RNN(imgLoad['images'][0:100, :, :, :].shape, 3)
-	train_rnn(net,data=tf.convert_to_tensor(imagLoad['images'],dtype="float32"),loss=tf.nn.softmax_cross_entropy_with_logits,batch=100,epochs=3,lr=0.1,train_lbs=imagLoad['targets'])
-
+	avg_loss = train_rnn(net,data=tf.convert_to_tensor(imagLoad['images'],dtype="float32"),loss=tf.nn.softmax_cross_entropy_with_logits,batch=100,epochs=3,lr=0.1,train_lbs=imagLoad['targets'])
+	plt.plot(avg_loss)
 
 if __name__ == '__main__'
 	main()
