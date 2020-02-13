@@ -6,9 +6,6 @@ Implements the research paper: https://www.frontiersin.org/articles/10.3389/fpsy
 
 tensorflow 2.0. keras, numpy, matplotlib
 
-In progess:
-Train on the whole dataset
-Validate the hyperparameters
 
 
 
