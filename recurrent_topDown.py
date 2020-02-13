@@ -20,9 +20,10 @@ class RecurrentCell(tf.Module):
         else:
             self.kernelW = tf.Variable(tf.random.normal(shape=(self.filterSize, self.filterSize, self.inChannel, self.outChannel), name="FwdKernel"))
             self.kernelU = tf.Variable(tf.random.normal(shape=(self.filterSize, self.filterSize, self.outChannel, self.outChannel), name="lateralKernel"))
+            self.kernelT = tf.Variable(tf.random.normal(shape=(self.filterSize, self.filterSize, self.outChannel, self.outChannel), name="lateralKernel"))
             self.b = tf.Variable(tf.zeros(shape=(self.outChannel, )), dtype="float32", name="bias")
         
-    def __call__(self, inputImage, lateralImage, dialatedImage=None, topDown=False):        
+    def __call__(self, inputImage, lateralImage=None, dialatedImage=None, topDown=False):        
         if self.fc == True:
             inputImage = Flatten()(inputImage)
             fwd = tf.tensordot(inputImage, tf.reshape(self.kernelW, shape=(inputImage.shape[1], -1)), axes=1) 
@@ -33,10 +34,13 @@ class RecurrentCell(tf.Module):
             rec = tf.nn.conv2d(lateralImage, self.kernelU, padding="SAME", strides=1)
             h = fwd + rec + self.b
             if topDown == True:
-                deconvImage = tf.nn.conv2d_transpose(dialatedImage, self.kernelU, output_shape=rec.shape, padding="SAME", strides=2 )
+                #deconvImage = tf.nn.conv2d_transpose(dialatedImage, self.kernelU, output_shape=rec.shape, padding="SAME", strides=2 )
+                deconvImage = tf.nn.conv2d_transpose(dialatedImage, self.kernelT, output_shape=rec.shape, padding="SAME", strides=2 )
                 h = h + deconvImage          
             h = self.activation(h)
+            #print(h.shape)
         return(h)
+            
 
 class RNN(tf.Module):
     def __init__(self,imageShape,hiddenUnit): 
@@ -57,26 +61,31 @@ class RNN(tf.Module):
     def __call__(self,inputImage,timeSteps):
         states = []
         dictOutputs = {}
+        dictActivations = {}
         states.append(tf.zeros(shape=(100, 32, 32, 32)))
         states.append(tf.zeros(shape=(100, 16, 16, 32)))
         states.append(None)
         for i in range(timeSteps):
             newStates = []
             x = inputImage
+            
             for enu in range(len(states)):
                 if enu ==0:
                     x = self.layer[enu](x, states[enu], states[enu+1],topDown=True)
-                
-                else:
+                    if i == (timeSteps - 1):
+                      dictActivations["layer_1"] = x
+                if enu==1:
                     x = self.layer[enu](x, states[enu])
-                    
+                    if i == (timeSteps - 1):
+                      dictActivations["layer_2"] = x
+
                 if self.pooling[enu] == None:
+                    x = self.layer[enu](x, states[enu])  
                     newStates.append(None)
-                    #dictOutputs[i] = tf.nn.softmax(x)
                     dictOutputs[i] = x
                     continue  
                 newStates.append(x)
-                x = tf.nn.local_response_normalization(x, depth_radius=5, bias=1, alpha=0.0001, beta=0.5)  
+                x = tf.nn.local_response_normalization(x, depth_radius=5, bias=1, alpha=0.01, beta=0.5)  
                 x = tf.nn.max_pool(x, ksize=self.pooling[enu], strides=2, padding="VALID") 
             states = newStates 
-        return(dictOutputs)
+        return dictOutputs, dictActivations
