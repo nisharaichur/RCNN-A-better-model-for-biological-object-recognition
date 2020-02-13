@@ -52,23 +52,26 @@ class RNN(tf.Module):
     def __call__(self, inputImage, timeSteps):
         states = []
         dictOutputs = {}
+        dictActivations = {}
+        lis = [1,2,3]
         states.append(tf.zeros(shape=(100, 32, 32, 32)))
         states.append(tf.zeros(shape=(100, 16, 16, 32)))
         states.append(None)
         for i in range(timeSteps):
             newStates = []
             x = inputImage
-            for l, s, k in zip(self.layer, states, self.pooling):
-                x = l(x, s)  
+            for l, s, k, li in zip(self.layer, states, self.pooling, lis):
+                x = l(x, s)          
                 if k == None:
                     newStates.append(None)
                     dictOutputs[i] = x
                     continue  
+                dictActivations[li]=x
                 newStates.append(x)
-                x = tf.nn.local_response_normalization(x, depth_radius=5, bias=1, alpha=0.0001, beta=0.5)  
+                x = tf.nn.local_response_normalization(x, depth_radius=5, bias=1, alpha=0.01, beta=0.5)  
                 x = tf.nn.max_pool(x, ksize=k, strides=2, padding="VALID") 
             states = newStates 
-        return(dictOutputs)
+        return dictOutputs, dictActivations
         
                 
 
