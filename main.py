@@ -5,7 +5,7 @@ from tensorflow.keras.layers import Flatten
 from IPython.core.display import display
 import matplotlib.pyplot as plt 
 from scipy.io import loadmat
-from recurrent_topDown import RNN, RecurrentCell
+from recurrent_topDown_BLT import RNN, RecurrentCell
 import json
 from datetime import datetime
 import pickle 
