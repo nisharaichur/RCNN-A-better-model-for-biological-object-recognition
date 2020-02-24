@@ -10,6 +10,7 @@ import json
 from datetime import datetime
 import pickle 
 
+#calculates the gradients, loss value and the activations from the model
 def gradient_loss(net, data, actualOutput, loss, accuracy, regularizer):
     with tf.GradientTape() as t:
         t.watch(net.variables)
@@ -20,7 +21,8 @@ def gradient_loss(net, data, actualOutput, loss, accuracy, regularizer):
         loss_regularized = loss_val + (tf.math.reduce_mean([tf.nn.l2_loss(x) for x in net.variables]) * regularizer) 
     gradients = t.gradient(loss_regularized, net.variables)
     return loss_regularized, gradients, accu
-    
+
+#Calculates the cross entropy loss function with sigmoid    
 def cross_entropy_loss(labels, logits):
     loss_val = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=labels)
     return tf.reduce_mean(loss_val)
@@ -113,20 +115,21 @@ def main():
 	train_images = loadmat('/content/drive/My Drive/RNN/Train/images_with_debris.mat')
 	validate_images = loadmat('/content/drive/My Drive/RNN/validate/images_with_debris.mat')
 	test_images = loadmat('/content/drive/My Drive/RNN/Test/images_with_debris.mat')
-	net = RNN(train_images['images'][0:100,:,:,:].shape, 3)
-	train_data = tf.cast((train_images['images']/255.0), dtype="float32")
-	validate_data = tf.cast((validate_images['images']/255.0), dtype="float32")
-	test_data = tf.cast((test_images['images']/255.0), dtype="float32")
+	net = RNN(train_images['images'][0:100,:,:,:].shape, 3) #Inittializes the model 
+	train_data = tf.cast((train_images['images']/255.0), dtype="float32") #normalize the train images
+	validate_data = tf.cast((validate_images['images']/255.0), dtype="float32") #normalize the train images
+	test_data = tf.cast((test_images['images']/255.0), dtype="float32") #normalize the train images
 
 	acc_list, error_list, valacc_list, valerror_list, val_activations= train_rnn(net, data=train_data, val_data=validate_data, loss=cross_entropy_loss, accuracy=accuracy, batch=100, epochs=100, lr=0.01, train_lbs=train_images['targets'], val_lbs=validate_images['targets'])
 	metrics = {'train_accuracy': acc_list, 'validation_accuracy': valacc_list, 'train_loss': error_list, 'validation_loss': valerror_list}
 	
-
+    #saves the metrics calculated above
 	with open("metrics.json", "w") as fp:
 	    json.dump(str(metrics), fp)
         
-        with open("weights.txt", 'rb') as ffp:
-            pickle.dump(net_variables, ffp)
+    #saves the trained weights
+    with open("weights.txt", 'rb') as ffp:
+        pickle.dump(net_variables, ffp)
 
 if __name__ == '__main__':
 	main()
