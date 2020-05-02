@@ -13,7 +13,16 @@ tensorflow 2.0. keras, numpy, matplotlib
   - Moderate Debris - 30 fragments
   - Heavy Debris - 50 fragments
   
- 
+
+| Models  | Feedforward | Lateral-BL(%) | Top-down-BT(%)| Lateral top down-BLT(%) |
+| ------ | ------ | ------ | ------ | ----- | 
+|No Debris | 0.649 | 0.709 | 0.919 | 0.668 | 
+|Light Debris(10)| 19.50 | 2.969 | 14.11 | 4.549 | 
+|Moderate Debris(30)| 91 | 12.650 | 90.5 | 21.697 |
+|Heavy Debris(50) | 91 | 16.708 | 90.53 | 21.11|
+
+
+
 # generate_add_bebris.py
 This file generates the debris and the images of desired number and adds the bedris onto the images.
 
