@@ -37,7 +37,7 @@ Classification error for all models on single digit detection under varying leve
 
 <img src="RNN_Images/image1.PNG" height="400" width="600" >
 
+# Learning to Recognize Unoccluded Digits When Trained with Occlusion
+Classification error for all models trained under heavy debris conditions and tested with or without debris. Examples of the images used to train and test the networks are also shown. Matrices to the right indicate significant results of pairwise McNemar tests. Comparisons are across models and within image sets. Black boxes indicate significant differences at p < 0.05 when controlling the expected false discovery rate at 0.05.
 
-
-
-
+<img src="RNN_Images/image3.PNG" height="400" width="550" >
