@@ -31,18 +31,11 @@ Here I have used the Digit-debris dataset to compare the performaces of recurren
 |Moderate Debris(30)| 91 | 12.650 | 90.5 | 21.697 |
 |Heavy Debris(50) | 91 | 16.708 | 90.53 | 21.11|
 
-# Files description
-- generate_add_bebris.py: This file generates the debris and the images of desired number and adds the bedris onto the images.
-- add_debris.py: This file adds the already generated debris onto the images
-- main.py: This file imports the model and calculates the the training function, which calculates the gradient, loss, accuracy, activations.
-- recurrent_lateral_BL.py: This file when imported in main.py crates a recurrent model with lateral connections alone(BL)
-- recurrent_topDown_BLT.py: This file when imported in main.py crates a recurrent model with lateral connections and topdown connections(BLT).
-- top_down_BT.py: This file when imported in main.py crates a recurrent model with topdown connections alone(BT).
-- feedforward_BF.ipynb: This is the .ipynb file which has a keras implementation for a feedforward model
-- Statistical_Test.ipynb: This is the .ipynb file which calculates the pair-wise McNemar test between any two models.
 
+# Learning to Recognize Digits Occluded by Debris
+Classification error for all models on single digit detection under varying levels of debris. Examples of the images used to train and test the networks are also shown. Matrices to the right indicate significant results of pairwise McNemar tests. Comparisons are across models and within image sets. Black boxes indicate significant differences at p < 0.05 when controlling the expected false discovery rate at 0.05.
 
-
+<img src="RNN_Images/image1.PNG" height="400" width="600" >
 
 
 
