@@ -1,17 +1,24 @@
 # Recurrent Convolutional Neural Networks: A Better Model of Biological Object Recognition
 Implements the research paper: https://www.frontiersin.org/articles/10.3389/fpsyg.2017.01551/full 
-Here I have used the digit debris dataset to compare the performaces of recurrent convolutional neural networks with bottom-up (B), lateral (L), and top-down (T) connections with that of the conventional CNN(feed-forward alone).
-# Prerequisites
+Here I have used the Digit-debris dataset to compare the performaces of recurrent convolutional neural networks with bottom-up (B), lateral (L), and top-down (T) connections with that of the conventional CNN(feed-forward alone).
 
-tensorflow 2.0. keras, numpy, matplotlib
+# Prerequisites
+- tensorflow 2.0. 
+- keras 
+- numpy
+- matplotlib
 
 # Dataset:
-4 types of dataset:
-  - No Debris
+4 types of data in Digit-debris dataset:
+  - No Debris - 0 frangments(original images)
   - Light Debris - 10 fragments
   - Moderate Debris - 30 fragments
   - Heavy Debris - 50 fragments
   
+# Error rates of each model 
+- Percentage error increases as the number of number debris increases (BLT has the lowest error with the highest number of debris)
+- Feeb-forward performs the worst with higest error rate for 50 debris
+- models with lateral connections perfomed convincingly better than feed-forward alone
 
 | Models  | Feedforward | Lateral-BL(%) | Top-down-BT(%)| Lateral top down-BLT(%) |
 | ------ | ------ | ------ | ------ | ----- | 
