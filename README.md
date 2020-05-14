@@ -17,8 +17,8 @@ Here I have used the Digit-debris dataset to compare the performaces of recurren
   
 # Error rates of each model 
 - Percentage error increases as the number of number debris increases (BLT has the lowest error with the highest number of debris)
-- Feeb-forward performs the worst with higest error rate for 50 debris
-- models with lateral connections perfomed convincingly better than feed-forward alone
+- Feeb-forward performs the worst with higest error rate (90%) for 50 debris
+- Models with lateral connections perfomed convincingly better than feed-forward alone
 
 | Models  | Feedforward | Lateral-BL(%) | Top-down-BT(%)| Lateral top down-BLT(%) |
 | ------ | ------ | ------ | ------ | ----- | 
@@ -27,39 +27,15 @@ Here I have used the Digit-debris dataset to compare the performaces of recurren
 |Moderate Debris(30)| 91 | 12.650 | 90.5 | 21.697 |
 |Heavy Debris(50) | 91 | 16.708 | 90.53 | 21.11|
 
-
-
-# generate_add_bebris.py
-This file generates the debris and the images of desired number and adds the bedris onto the images.
-
-# add_debris.py
-This file adds the already generated debris onto the images
-
-
-Train folder: contains the 100,000 images for each type of dataset
-
-Validate folder: contains 10,000 images for each type of dataset
-
-Test folder: contains 10,000 images for each type of dataset
-
-
-# main.py:
-This file imports the model and calculates the the training function, which calculates the gradient, loss, accuracy, activations.
-
-# recurrent_lateral_BL.py:
-This file when imported in main.py crates a recurrent model with lateral connections alone(BL)
-
-# recurrent_topDown_BLT.py
-This file when imported in main.py crates a recurrent model with lateral connections and topdown connections(BLT).
-
-# top_down_BT.py
-This file when imported in main.py crates a recurrent model with topdown connections alone(BT).
-
-# feedforward_BF.ipynb
-This is the .ipynb file which has a keras implementation for a feedforward model
-
-# Statistical_Test.ipynb
-THis is the .ipynb file which calculates the pair-wise McNemar test between any two models.
+#Descriptions of the files
+- generate_add_bebris.py: This file generates the debris and the images of desired number and adds the bedris onto the images.
+- add_debris.py: This file adds the already generated debris onto the images
+- main.py: This file imports the model and calculates the the training function, which calculates the gradient, loss, accuracy, activations.
+- recurrent_lateral_BL.py: This file when imported in main.py crates a recurrent model with lateral connections alone(BL)
+- recurrent_topDown_BLT.py: This file when imported in main.py crates a recurrent model with lateral connections and topdown connections(BLT).
+- top_down_BT.py: This file when imported in main.py crates a recurrent model with topdown connections alone(BT).
+- feedforward_BF.ipynb: This is the .ipynb file which has a keras implementation for a feedforward model
+- Statistical_Test.ipynb: This is the .ipynb file which calculates the pair-wise McNemar test between any two models.
 
 
 
