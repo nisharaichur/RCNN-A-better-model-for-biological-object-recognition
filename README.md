@@ -2,6 +2,8 @@
 Implements the research paper: https://www.frontiersin.org/articles/10.3389/fpsyg.2017.01551/full 
 Here I have used the Digit-debris dataset to compare the performaces of recurrent convolutional neural networks with bottom-up (B), lateral (L), and top-down (T) connections with that of the conventional CNN(feed-forward alone).
 
+<img src="https://www.frontiersin.org/files/Articles/278016/fpsyg-08-01551-HTML-r1/image_m/fpsyg-08-01551-g003.jpg" height="300" width=500>
+
 # Prerequisites
 - tensorflow 2.0. 
 - keras 
@@ -15,14 +17,14 @@ Here I have used the Digit-debris dataset to compare the performaces of recurren
   - Moderate Debris - 30 fragments
   - Heavy Debris - 50 fragments
   
-<img src="RNN_Images/data_set_generation.PNG" height="300" >
+<img src="RNN_Images/data_set_generation.PNG" height="300" width="500" >
 
 # Error rates of each model 
 - Percentage error increases as the number of number debris increases (BLT has the lowest error with the highest number of debris)
 - Feeb-forward performs the worst with higest error rate (90%) for 50 debris
 - Models with lateral connections perfomed convincingly better than feed-forward alone
 
-| Models  | Feedforward | Lateral-BL(%) | Top-down-BT(%)| Lateral top down-BLT(%) |
+| Models  | Feed-forward(%) | Lateral-BL(%) | Top-down-BT(%)| Lateral top down-BLT(%) |
 | ------ | ------ | ------ | ------ | ----- | 
 |No Debris | 0.649 | 0.709 | 0.919 | 0.668 | 
 |Light Debris(10)| 19.50 | 2.969 | 14.11 | 4.549 | 
