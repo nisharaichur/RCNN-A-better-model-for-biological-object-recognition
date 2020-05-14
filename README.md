@@ -1,7 +1,6 @@
-# RecurrentNeuralNetwork
-Recurrent Convolutional Neural Networks: A Better Model of Biological Object Recognition
+# Recurrent Convolutional Neural Networks: A Better Model of Biological Object Recognition
 Implements the research paper: https://www.frontiersin.org/articles/10.3389/fpsyg.2017.01551/full 
-
+Here I have used the digit debris dataset to compare the performaces of recurrent convolutional neural networks with bottom-up (B), lateral (L), and top-down (T) connections with that of the conventional CNN(feed-forward alone).
 # Prerequisites
 
 tensorflow 2.0. keras, numpy, matplotlib
