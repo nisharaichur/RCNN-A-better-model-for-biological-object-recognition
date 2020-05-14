@@ -15,6 +15,8 @@ Here I have used the Digit-debris dataset to compare the performaces of recurren
   - Moderate Debris - 30 fragments
   - Heavy Debris - 50 fragments
   
+<img src="RNN_Images/data_set_generation.PNG" height="300" >
+
 # Error rates of each model 
 - Percentage error increases as the number of number debris increases (BLT has the lowest error with the highest number of debris)
 - Feeb-forward performs the worst with higest error rate (90%) for 50 debris
@@ -27,7 +29,7 @@ Here I have used the Digit-debris dataset to compare the performaces of recurren
 |Moderate Debris(30)| 91 | 12.650 | 90.5 | 21.697 |
 |Heavy Debris(50) | 91 | 16.708 | 90.53 | 21.11|
 
-#Descriptions of the files
+# Files description
 - generate_add_bebris.py: This file generates the debris and the images of desired number and adds the bedris onto the images.
 - add_debris.py: This file adds the already generated debris onto the images
 - main.py: This file imports the model and calculates the the training function, which calculates the gradient, loss, accuracy, activations.
